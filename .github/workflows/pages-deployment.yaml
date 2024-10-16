@@ -1,7 +1,4 @@
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,4 +20,4 @@ jobs:
           projectName: portfolio # e.g. 'my-project'
           directory: dist # e.g. 'dist'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
+          production: true  # Deploy to production
