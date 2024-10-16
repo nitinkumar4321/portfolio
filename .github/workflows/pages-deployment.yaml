@@ -20,4 +20,4 @@ jobs:
           projectName: portfolio # e.g. 'my-project'
           directory: dist # e.g. 'dist'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: production  # Deploy to production
+          branch: production  # Deploy to production (to do deployment to preview use preview)
