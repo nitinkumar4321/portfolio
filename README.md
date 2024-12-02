@@ -9,7 +9,7 @@
 
 ```bash
 # Install NOT NEEED, we can use npx 
-#Install Wrangler CLI
+# Install Wrangler CLI
 # npm install -g wrangler
 
 #Or use instead of intalling globally
@@ -26,9 +26,7 @@ npx wrangler pages deploy dist
 ```
 
 ## Bugs 
-- In mobile view `Name` is hidden by navbar
-- In desktop view navbar clicks are not scrolling properly
+
 
 ## TODO
 - Add projects
-- Update skills section with better looks
