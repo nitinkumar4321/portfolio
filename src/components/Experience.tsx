@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Timeline } from './ui/timeline'
 import { timelineData } from '../data'
+import { FaBriefcase } from 'react-icons/fa'
 
 const Experience = () => {
   return (
@@ -13,8 +14,14 @@ const Experience = () => {
           viewport={{ once: true }}
           className="text-center mb-4"
         >
-          <h2 className="text-3xl font-bold">Experience</h2>
-          <p className="text-gray-400 mt-2">My professional journey</p>
+          <span className="px-4 py-2 rounded-full bg-blue-500/10 text-blue-400 text-sm font-medium inline-flex items-center gap-2">
+            <FaBriefcase className="w-4 h-4" />
+            Professional Journey
+          </span>
+          <h2 className="text-4xl font-bold mt-4">Work Experience</h2>
+          <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
+            A track record of delivering impactful solutions and driving innovation across various roles.
+          </p>
         </motion.div>
 
         <motion.div

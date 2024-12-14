@@ -12,7 +12,7 @@ import Availability from './components/Availability'
 
 const App: FC = () => {
   return (
-    <div className="text-white">
+    <div className="relative w-full overflow-x-hidden">
       <Navbar />
       <Hero />
       <About />
