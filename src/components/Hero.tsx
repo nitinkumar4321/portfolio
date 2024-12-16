@@ -4,25 +4,26 @@ import { TextGenerateEffect } from './ui/text-generate-effect'
 import boyComputerAnimation from '../assets/animations/boy-computer.json'
 import LottieAnimation from './ui/lottie-animation'
 import { FC } from 'react'
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import { FaGithub, FaLinkedin,  } from 'react-icons/fa'
+// import { FaTwitter } from 'react-icons/fa'
 
 const Hero: FC = () => {
   const socialLinks = [
     {
       icon: <FaGithub className="w-6 h-6" />,
-      href: 'https://github.com/yourusername',
+      href: 'https://github.com/nitinkumar4321',
       label: 'GitHub'
     },
     {
       icon: <FaLinkedin className="w-6 h-6" />,
-      href: 'https://linkedin.com/in/yourusername',
+      href: 'https://linkedin.com/in/nitinkumar4321',
       label: 'LinkedIn'
     },
-    {
-      icon: <FaTwitter className="w-6 h-6" />,
-      href: 'https://twitter.com/yourusername',
-      label: 'Twitter'
-    }
+    // {
+    //   icon: <FaTwitter className="w-6 h-6" />,
+    //   href: 'https://twitter.com/yourusername',
+    //   label: 'Twitter'
+    // }
   ]
 
   return (

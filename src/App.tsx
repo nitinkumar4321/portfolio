@@ -9,10 +9,12 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Experience from './components/Experience'
 import Availability from './components/Availability'
+import { ParallaxBackground } from './components/ParallaxBackground'
 
 const App: FC = () => {
   return (
     <div className="relative w-full overflow-x-hidden">
+      <ParallaxBackground />
       <Navbar />
       <Hero />
       <About />

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, } from 'react-icons/fa'
+// import { FaTwitter } from 'react-icons/fa'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -10,9 +11,9 @@ const Footer = () => {
   //   { icon: FaTwitter, href: 'https://twitter.com/yourusername', label: 'Twitter' },
   // ]
   const socialLinks = [
-    { icon: FaGithub, href: '', label: 'GitHub' },
-    { icon: FaLinkedin, href: '', label: 'LinkedIn' },
-    { icon: FaTwitter, href: '', label: 'Twitter' },
+    { icon: FaGithub, href: 'https://github.com/nitinkumar4321', label: 'GitHub' },
+    { icon: FaLinkedin, href: 'https://linkedin.com/in/nitinkumar4321', label: 'LinkedIn' },
+    // { icon: FaTwitter, href: '', label: 'Twitter' },
   ]
 
   return (
