@@ -1,39 +1,7 @@
 "use client";
 import { WorldMap } from "./ui/world-map";
 import { motion } from "framer-motion";
-import { FaClock, FaGlobeAmericas, FaCalendarCheck } from "react-icons/fa";
-import { BsLightningChargeFill } from "react-icons/bs";
-
-const timeZones = [
-  { city: "Los Angeles", time: "PST", offset: "-8:00" },
-  { city: "New York", time: "EST", offset: "-5:00" },
-  { city: "London", time: "GMT", offset: "+0:00" },
-  { city: "Dubai", time: "GST", offset: "+4:00" },
-  { city: "Singapore", time: "SGT", offset: "+8:00" },
-];
-
-const features = [
-  {
-    icon: <FaClock className="w-6 h-6 text-blue-400" />,
-    title: "Flexible Hours",
-    description: "Available during your business hours, regardless of time zones"
-  },
-  {
-    icon: <FaGlobeAmericas className="w-6 h-6 text-blue-400" />,
-    title: "Global Reach",
-    description: "Working with clients worldwide, adapting to different cultures"
-  },
-  {
-    icon: <BsLightningChargeFill className="w-6 h-6 text-blue-400" />,
-    title: "Quick Response",
-    description: "Fast communication and regular progress updates"
-  },
-  {
-    icon: <FaCalendarCheck className="w-6 h-6 text-blue-400" />,
-    title: "Scheduled Meetings",
-    description: "Regular sync-ups at times that work for you"
-  }
-];
+import { features } from "../data";
 
 export default function Availability() {
   return (
@@ -100,7 +68,7 @@ export default function Availability() {
         </motion.div>
 
         {/* Time Zones */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -123,7 +91,7 @@ export default function Availability() {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* World Map */}
         <motion.div

@@ -1,30 +1,36 @@
 import React from 'react';
-import { 
-    FaJava, 
-    FaPython, 
-    FaNodeJs, 
-    FaReact, 
-    FaAws,
-    FaGitAlt 
-  } from 'react-icons/fa'
-  import { 
-    SiExpress, 
-    SiNextdotjs, 
-    SiTypescript, 
-    SiTailwindcss, 
-    SiMongodb, 
-    SiPostgresql 
-  } from 'react-icons/si'
+import { FaJava, FaPython, FaNodeJs, FaReact, FaAws, FaGitAlt, FaClock, FaCalendarCheck, FaGlobeAmericas } from 'react-icons/fa'
+import { SiExpress, SiNextdotjs, SiTypescript, SiTailwindcss, SiMongodb, SiPostgresql } from 'react-icons/si'
+import { BsLightningChargeFill } from "react-icons/bs";
 
-  const menuItems = [
-    { title: 'Home', link: 'hero' },
-    { title: 'About', link: 'about' },
-    { title: 'Skills', link: 'skills' },
-    // { title: 'Projects', link: 'projects' },
-    { title: 'Experience', link: 'experience' },
-    { title: 'Testimonials', link: 'testimonials' },
-    { title: 'Contact', link: 'contact' },
-  ]
+const menuItems = [
+  { title: 'Home', link: 'hero' },
+  { title: 'About', link: 'about' },
+  { title: 'Skills', link: 'skills' },
+  // { title: 'Projects', link: 'projects' },
+  { title: 'Experience', link: 'experience' },
+  { title: 'Testimonials', link: 'testimonials' },
+  { title: 'Contact', link: 'contact' },
+]
+
+const certifications = [
+  {
+    title: "AWS Certified Cloud Practitioner",
+    issuer: "AWS",
+    date: "January 17, 2025",
+    badge: "/certifications/clf.png",
+    validationId: "5abc5047ab254859c8d048961b681b3",
+    verifyUrl: "https://aws.amazon.com/verification"
+  },
+  {
+    title: "CommerceTools Certification",
+    issuer: "CommerceTools",
+    date: "July 26, 2023",
+    badge: "/certifications/commercetools.png",
+    validationId: "I9WL80QfAD",
+    verifyUrl: "https://www.commercetools.com/"
+  }
+]
   
   const skills = [
     { name: 'Java', icon: FaJava },
@@ -246,7 +252,39 @@ import {
           </div>
         </div>
       ),
-    }
+    },
   ];
 
-  export {skills, projects, experiences, menuItems, timelineData, testimonials}
+
+// const timeZones = [
+//   { city: "Los Angeles", time: "PST", offset: "-8:00" },
+//   { city: "New York", time: "EST", offset: "-5:00" },
+//   { city: "London", time: "GMT", offset: "+0:00" },
+//   { city: "Dubai", time: "GST", offset: "+4:00" },
+//   { city: "Singapore", time: "SGT", offset: "+8:00" },
+// ];
+
+const features = [
+  {
+    icon: <FaClock className="w-6 h-6 text-blue-400" />,
+    title: "Flexible Hours",
+    description: "Available during your business hours, regardless of time zones"
+  },
+  {
+    icon: <FaGlobeAmericas className="w-6 h-6 text-blue-400" />,
+    title: "Global Reach",
+    description: "Working with clients worldwide, adapting to different cultures"
+  },
+  {
+    icon: <BsLightningChargeFill className="w-6 h-6 text-blue-400" />,
+    title: "Quick Response",
+    description: "Fast communication and regular progress updates"
+  },
+  {
+    icon: <FaCalendarCheck className="w-6 h-6 text-blue-400" />,
+    title: "Scheduled Meetings",
+    description: "Regular sync-ups at times that work for you"
+  }
+];
+
+  export {certifications, skills, projects, experiences, menuItems, timelineData, testimonials, features}
