@@ -60,7 +60,7 @@ const Skills = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="group flex flex-col md:flex-row items-center gap-6 p-6 rounded-xl
+                  className="group flex flex-col lg:flex-row items-center gap-6 p-6 rounded-xl
                     bg-gradient-to-b from-white/5 to-transparent hover:from-blue-500/10 hover:to-purple-500/10
                     border border-white/5 hover:border-blue-500/20 transition-all duration-300"
                 >
@@ -72,25 +72,25 @@ const Skills = () => {
                       className="relative w-32 h-32 object-contain"
                     />
                   </div>
-                  <div className="flex flex-col items-center md:items-start">
+                  <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
                     <h3 className="text-xl font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
                       {cert.title}
                     </h3>
-                    <div className="mt-2 flex flex-col gap-1">
+                    <div className="mt-4 flex flex-col gap-2">
                       <p className="text-sm text-gray-400">
                         <span className="font-medium">Issued by:</span> {cert.issuer}
                       </p>
                       <p className="text-sm text-gray-400">
                         <span className="font-medium">Issue Date:</span> {cert.date}
                       </p>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-gray-400 break-words">
                         <span className="font-medium">ID:</span> {cert.validationId}
                       </p>
                       <a
                         href={cert.verifyUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 text-sm text-blue-400 hover:text-blue-300 inline-flex items-center gap-1"
+                        className="mt-2 text-sm text-blue-400 hover:text-blue-300 inline-flex items-center justify-center lg:justify-start gap-1"
                       >
                         Verify Certificate <span>→</span>
                       </a>

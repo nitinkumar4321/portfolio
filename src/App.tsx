@@ -10,22 +10,26 @@ import Footer from './components/Footer'
 import Experience from './components/Experience'
 import Availability from './components/Availability'
 import { ParallaxBackground } from './components/ParallaxBackground'
+import { Toaster } from 'sonner'
 
 const App: FC = () => {
   return (
-    <div className="relative w-full overflow-x-hidden">
-      <ParallaxBackground />
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      {/* <Projects /> */}
-      <Experience />
-      <Availability />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </div>
+    <>
+      <Toaster richColors position="top-right" />
+      <div className="relative w-full overflow-x-hidden">
+        <ParallaxBackground />
+        <Navbar />
+        <Hero />
+        <About />
+        <Skills />
+        {/* <Projects /> */}
+        <Experience />
+        <Availability />
+        <Testimonials />
+        <Contact />
+        <Footer />
+      </div>
+    </>
   )
 }
 

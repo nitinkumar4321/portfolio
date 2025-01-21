@@ -2,11 +2,42 @@ import { motion } from 'framer-motion'
 import { FaGlobe, FaEnvelope, FaArrowRight } from 'react-icons/fa'
 import LottieAnimation from './ui/lottie-animation'
 import contactAnimation from '../assets/animations/contact.json'
+import emailjs from '@emailjs/browser'
+import { useState, useRef, useEffect } from 'react'
+import { toast } from 'sonner'
 
 const Contact = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
+
+  useEffect(() => {
+    // Initialize EmailJS with the public key
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
+  }, [])
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Add your form submission logic here
+    setIsLoading(true)
+
+    try {
+      const form = formRef.current
+      if (!form) return
+
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
+        form,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || ''
+      )
+
+      toast.success('Message sent successfully!')
+      form.reset()
+    } catch (error) {
+      console.error('EmailJS Error:', error)
+      toast.error('Failed to send message. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -121,6 +152,7 @@ const Contact = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-blue-500/5 rounded-2xl blur-xl" />
               <motion.form
+                ref={formRef}
                 onSubmit={handleSubmit}
                 className="relative bg-black/20 backdrop-blur-sm rounded-2xl border border-white/5 p-8 space-y-6"
               >
@@ -133,9 +165,11 @@ const Contact = () => {
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
                   <input
                     type="text"
+                    name="user_name"
                     id="name"
                     className="w-full px-4 py-3 bg-black/20 rounded-lg border border-white/5 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none"
                     required
+                    disabled={isLoading}
                   />
                 </motion.div>
 
@@ -148,9 +182,11 @@ const Contact = () => {
                   <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
                   <input
                     type="email"
+                    name="user_email"
                     id="email"
                     className="w-full px-4 py-3 bg-black/20 rounded-lg border border-white/5 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none"
                     required
+                    disabled={isLoading}
                   />
                 </motion.div>
 
@@ -163,9 +199,11 @@ const Contact = () => {
                   <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={4}
                     className="w-full px-4 py-3 bg-black/20 rounded-lg border border-white/5 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none resize-none"
                     required
+                    disabled={isLoading}
                   />
                 </motion.div>
 
@@ -177,10 +215,23 @@ const Contact = () => {
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all duration-300"
+                  disabled={isLoading}
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
-                  <FaArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  {isLoading ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    <>
+                      Send Message
+                      <FaArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </>
+                  )}
                 </motion.button>
               </motion.form>
             </div>

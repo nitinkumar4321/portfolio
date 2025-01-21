@@ -23,7 +23,7 @@ const certifications = [
     verifyUrl: "https://aws.amazon.com/verification"
   },
   {
-    title: "CommerceTools Certification",
+    title: "CommerceTools Java Developer",
     issuer: "CommerceTools",
     date: "July 26, 2023",
     badge: "/certifications/commercetools.png",
@@ -86,23 +86,23 @@ const certifications = [
     // Add more testimonials...
   ]
 
-  const experiences = [
-    {
-      company: 'Company Name 1',
-      position: 'Senior Developer',
-      period: '2022 - Present',
-      description: 'Led development of multiple full-stack applications, mentored junior developers, and implemented CI/CD pipelines.',
-      technologies: ['React', 'Node.js', 'AWS']
-    },
-    {
-      company: 'Company Name 2',
-      position: 'Full Stack Developer',
-      period: '2020 - 2022',
-      description: 'Developed and maintained web applications, collaborated with cross-functional teams.',
-      technologies: ['Vue.js', 'Python', 'Docker']
-    },
-    // Add more experiences...
-  ]
+  // const experiences = [
+  //   {
+  //     company: 'Company Name 1',
+  //     position: 'Senior Developer',
+  //     period: '2022 - Present',
+  //     description: 'Led development of multiple full-stack applications, mentored junior developers, and implemented CI/CD pipelines.',
+  //     technologies: ['React', 'Node.js', 'AWS']
+  //   },
+  //   {
+  //     company: 'Company Name 2',
+  //     position: 'Full Stack Developer',
+  //     period: '2020 - 2022',
+  //     description: 'Developed and maintained web applications, collaborated with cross-functional teams.',
+  //     technologies: ['Vue.js', 'Python', 'Docker']
+  //   },
+  //   // Add more experiences...
+  // ]
 
   type TimelineEntry = {
     title: string;
@@ -287,4 +287,4 @@ const features = [
   }
 ];
 
-  export {certifications, skills, projects, experiences, menuItems, timelineData, testimonials, features}
+  export {certifications, skills, projects, menuItems, timelineData, testimonials, features}
