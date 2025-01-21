@@ -10,17 +10,29 @@ const Contact = () => {
   const [isLoading, setIsLoading] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
+  // Try these alternative ways to access env variables
+  const getEnvVariables = () => ({
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || process.env.VITE_EMAILJS_PUBLIC_KEY,
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || process.env.VITE_EMAILJS_SERVICE_ID,
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || process.env.VITE_EMAILJS_TEMPLATE_ID
+  })
+
   useEffect(() => {
-    // Debug logging for environment variables
-    console.log('EmailJS Environment Variables:', {
-      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY ? 'Present' : 'Missing',
-      serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ? 'Present' : 'Missing',
-      templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ? 'Present' : 'Missing'
-    })
+    // Debug logging with actual values
+    console.log('Raw Environment Variables:', getEnvVariables())
+
+    if (!getEnvVariables().publicKey || !getEnvVariables().serviceId || !getEnvVariables().templateId) {
+      console.error('Missing required environment variables:', {
+        hasPublicKey: !!getEnvVariables().publicKey,
+        hasServiceId: !!getEnvVariables().serviceId,
+        hasTemplateId: !!getEnvVariables().templateId
+      })
+      return
+    }
 
     try {
-      emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
-      console.log('EmailJS initialized successfully')
+      emailjs.init(getEnvVariables().publicKey)
+      console.log('EmailJS initialized with public key')
     } catch (error) {
       console.error('EmailJS initialization error:', error)
     }
@@ -29,55 +41,32 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
-    console.log('Form submission started')
+
+    if (!getEnvVariables().publicKey || !getEnvVariables().serviceId || !getEnvVariables().templateId) {
+      toast.error('Email service is not properly configured')
+      setIsLoading(false)
+      return
+    }
 
     try {
       const form = formRef.current
-      if (!form) {
-        console.error('Form reference is null')
-        return
-      }
+      if (!form) return
 
-      // Log form data (be careful with sensitive information in production)
-      const formData = new FormData(form)
-      console.log('Form data:', {
-        name: formData.get('user_name'),
-        email: formData.get('user_email'),
-        messageLength: formData.get('message')?.toString().length
-      })
-
-      // Log EmailJS configuration
-      console.log('EmailJS Configuration:', {
-        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ? 'Present' : 'Missing',
-        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ? 'Present' : 'Missing',
-        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY ? 'Present' : 'Missing'
-      })
-
-      console.log('Attempting to send email...')
       const result = await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
+        getEnvVariables().serviceId,
+        getEnvVariables().templateId,
         form,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || ''
+        getEnvVariables().publicKey
       )
 
-      console.log('EmailJS Response:', result)
+      console.log('EmailJS send result:', result)
       toast.success('Message sent successfully!')
       form.reset()
     } catch (error) {
-      console.error('EmailJS Error Details:', {
-        error,
-        timestamp: new Date().toISOString(),
-        browserInfo: {
-          userAgent: navigator.userAgent,
-          language: navigator.language,
-          platform: navigator.platform
-        }
-      })
+      console.error('Send error:', error)
       toast.error('Failed to send message. Please try again.')
     } finally {
       setIsLoading(false)
-      console.log('Form submission completed')
     }
   }
 
