@@ -2,66 +2,30 @@ import { motion } from 'framer-motion'
 import { FaGlobe, FaEnvelope, FaArrowRight } from 'react-icons/fa'
 import LottieAnimation from './ui/lottie-animation'
 import contactAnimation from '../assets/animations/contact.json'
-import emailjs from '@emailjs/browser'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
-  // Try these alternative ways to access env variables
-  const getEnvVariables = () => ({
-    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || process.env.VITE_EMAILJS_PUBLIC_KEY,
-    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || process.env.VITE_EMAILJS_SERVICE_ID,
-    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || process.env.VITE_EMAILJS_TEMPLATE_ID
-  })
-
-  useEffect(() => {
-    // Debug logging with actual values
-    console.log('Raw Environment Variables:', getEnvVariables())
-
-    if (!getEnvVariables().publicKey || !getEnvVariables().serviceId || !getEnvVariables().templateId) {
-      console.error('Missing required environment variables:', {
-        hasPublicKey: !!getEnvVariables().publicKey,
-        hasServiceId: !!getEnvVariables().serviceId,
-        hasTemplateId: !!getEnvVariables().templateId
-      })
-      return
-    }
-
-    try {
-      emailjs.init(getEnvVariables().publicKey)
-      console.log('EmailJS initialized with public key')
-    } catch (error) {
-      console.error('EmailJS initialization error:', error)
-    }
-  }, [])
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
 
-    if (!getEnvVariables().publicKey || !getEnvVariables().serviceId || !getEnvVariables().templateId) {
-      toast.error('Email service is not properly configured')
-      setIsLoading(false)
-      return
-    }
-
     try {
-      const form = formRef.current
-      if (!form) return
+      const formData = new FormData(e.currentTarget)
+      const response = await fetch('https://formsubmit.co/nitinkumar4321@gmail.com', {
+        method: 'POST',
+        body: formData
+      })
 
-      const result = await emailjs.sendForm(
-        getEnvVariables().serviceId,
-        getEnvVariables().templateId,
-        form,
-        getEnvVariables().publicKey
-      )
-
-      console.log('EmailJS send result:', result)
-      toast.success('Message sent successfully!')
-      form.reset()
+      if (response.ok) {
+        toast.success('Message sent successfully!')
+        formRef.current?.reset()
+      } else {
+        throw new Error('Failed to send message')
+      }
     } catch (error) {
       console.error('Send error:', error)
       toast.error('Failed to send message. Please try again.')
@@ -186,6 +150,12 @@ const Contact = () => {
                 onSubmit={handleSubmit}
                 className="relative bg-black/20 backdrop-blur-sm rounded-2xl border border-white/5 p-8 space-y-6"
               >
+                {/* FormSubmit configuration */}
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_subject" value="New Contact Form Submission" />
+                <input type="hidden" name="_next" value="https://info.kumarnit.in" />
+
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -195,7 +165,7 @@ const Contact = () => {
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
                   <input
                     type="text"
-                    name="user_name"
+                    name="name"
                     id="name"
                     className="w-full px-4 py-3 bg-black/20 rounded-lg border border-white/5 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none"
                     required
@@ -212,7 +182,7 @@ const Contact = () => {
                   <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
                   <input
                     type="email"
-                    name="user_email"
+                    name="email"
                     id="email"
                     className="w-full px-4 py-3 bg-black/20 rounded-lg border border-white/5 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none"
                     required
