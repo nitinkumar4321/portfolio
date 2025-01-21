@@ -11,32 +11,73 @@ const Contact = () => {
   const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
-    // Initialize EmailJS with the public key
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
+    // Debug logging for environment variables
+    console.log('EmailJS Environment Variables:', {
+      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY ? 'Present' : 'Missing',
+      serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ? 'Present' : 'Missing',
+      templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ? 'Present' : 'Missing'
+    })
+
+    try {
+      emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '')
+      console.log('EmailJS initialized successfully')
+    } catch (error) {
+      console.error('EmailJS initialization error:', error)
+    }
   }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
+    console.log('Form submission started')
 
     try {
       const form = formRef.current
-      if (!form) return
+      if (!form) {
+        console.error('Form reference is null')
+        return
+      }
 
-      await emailjs.sendForm(
+      // Log form data (be careful with sensitive information in production)
+      const formData = new FormData(form)
+      console.log('Form data:', {
+        name: formData.get('user_name'),
+        email: formData.get('user_email'),
+        messageLength: formData.get('message')?.toString().length
+      })
+
+      // Log EmailJS configuration
+      console.log('EmailJS Configuration:', {
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ? 'Present' : 'Missing',
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ? 'Present' : 'Missing',
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY ? 'Present' : 'Missing'
+      })
+
+      console.log('Attempting to send email...')
+      const result = await emailjs.sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
         form,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY || ''
       )
 
+      console.log('EmailJS Response:', result)
       toast.success('Message sent successfully!')
       form.reset()
     } catch (error) {
-      console.error('EmailJS Error:', error)
+      console.error('EmailJS Error Details:', {
+        error,
+        timestamp: new Date().toISOString(),
+        browserInfo: {
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          platform: navigator.platform
+        }
+      })
       toast.error('Failed to send message. Please try again.')
     } finally {
       setIsLoading(false)
+      console.log('Form submission completed')
     }
   }
 
